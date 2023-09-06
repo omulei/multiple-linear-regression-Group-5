@@ -1,5 +1,3 @@
----
-
 # **Multiple Linear Regression Analysis using KC House Data**
 
 ## **Project Overview**
@@ -63,15 +61,3 @@ To install the necessary libraries, use the following:
 ## **Contribution**
 
 We encourage community contributions. If you find any bugs or areas of improvement, please create an issue or submit a pull request on our GitHub repository.
-
-## **Acknowledgments**
-
-We'd like to thank our professors and mentors for their constant guidance. Special thanks to the KC Housing Authority for providing the dataset.
-
-## **License**
-
-This project is licensed under the MIT License - see the [LICENSE.md](#) file for details.
-
----
-
-You can replace placeholders (like the team member names, emails, and GitHub profiles) with the actual details. The image URL is a placeholder as well; you might want to replace it with a relevant image of your choice.

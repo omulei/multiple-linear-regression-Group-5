@@ -1,10 +1,27 @@
-# Data-Driven Revenue Maximization for Haven-Kings Property Management
+# Multiple Linear Regression: Predicting Housing Prices in King County, Washington for Haven-Kings Property Management
 
-## Project Overview
+![Country Home](./images/Country Home.png)
 
-Haven-Kings Property Management seeks to revolutionize house pricing using predictive models based on property features. This initiative aims to maximize revenue and maintain a competitive edge in King County, Washington, using the Multiple Linear Regression technique with the help of the ScikitLearn library. Our team of four has delved deep into the dataset to gain insights, preprocess data, and build an effective regression model.
 
-![Alt Text](https://raw.githubusercontent.com/omulei/multiple-linear-regression-Group-5/Presentation/image.webp)
+Haven-Kings Property Management aims to transform house pricing by utilizing predictive models based on property attributes. 
+
+This research is an iterative method to developing a multiple linear regression model to predict house sale prices in King County, WA, using data from properties sold in 2014 and 2015. 
+
+The first part of this project is spent cleaning the data, designing a few additional features, and then building models, modifying each model until a final model is built.
+
+The following is a list of all models constructed, as well as a broad description of the differences between each model:
+
+### 1. Model 1: Using All Features
+Our first model yields an adjusted r-squared of.736, however the residuals were not normal, contradicting our assumption of normality.
+
+
+![Model1 QQ Plot](Images/Model1.png)
+
+### 2. Model 2: 2. Normalizing the dependent variable
+Our r-squared was reduced to.723 after removing outliers and limiting the size of our dependent variable, but our residuals now much more closely resemble a normal distribution. 
+
+
+![Model2 Dist Plota](Images/Model2.png)
 
 ## Repository Navigation (To be edited to fit names of our final files)
 
@@ -56,8 +73,11 @@ We employed multiple linear regression and machine learning techniques to build 
 **Model Building**: Utilize ScikitLearn's Linear Regression to predict house prices. ****
 **Model Evaluation**: Use metrics like R-squared, RMSE, etc. to evaluate the model's performance. *****
 
- ### 5. Conclusions and Recommendations ******
+### 5. Conclusion
 
+Multiple regression analysis was used to test if certain variables significantly predicted the 
+sale price of homes in King County, Washington. The results of the regression indicated that 
+14 predictors and 2 interaction terms explained 75.6% of the variance (R2= 0.756, F=2470, p< 0.01). All of the independent variables used in the model were significant predictors of sale price with p-values less than 0.05. For further analysis, other models can be used to improve accuracy of results, such as a Random Forest Regression model. Additionally, one could build a second regression model to predict prices of homes over 900k.
 
 
 

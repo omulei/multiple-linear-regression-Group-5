@@ -1224,19 +1224,20 @@ Given the research questions and the features in our dataset, here are the propo
 - **Target Variable**: Price.
 - **Method**: Multiple linear regression will be used to understand the contribution of each feature to the house price.
 
-<u>*Model 2: Property Attributes and Their Influence on Market Value*</u>
+<u>*Model 2: Impact of Living Space on House Price*</u>
+
+**Objective**: Understand the relationship between the living space (in square feet) and the price of houses in King County.
+- **Features**: `sqft_living`.
+- **Target Variable**: Price.
+- **Method**: Simple linear regression was used to quantify the linear relationship between living space and house price. The predictor `sqft_living` was chosen due to its high correlation coefficient of approximately \(0.702\) with the target variable, indicating a strong positive linear relationship.
+
+<u>*Model 3: Property Attributes and Their Influence on Market Value*</u>
 
 - **Objective:** Assess how property attributes, including geographical aspects, affect market value.
 - **Features:** Variables like `grade`, `condition`, `view`, `sqft_living`, `age_house`, and others describe the property.
 - **Target:** The property's market value or "price".
 - **Method:** Multiple linear regression, enhanced with preprocessing techniques like Box-Cox transformation and one-hot encoding.
-
-<u>*Model 3: Predictive Power for "Haven-Kings" Portfolio*</u>
-
-**Objective**: Evaluate the capability of a predictive model to forecast prices for the properties managed by "Haven-Kings".
-- **Features**: The most influential features as determined by the first two models.
-- **Target Variable**: Price.
-- **Method**: Multiple linear regression will be used, and the model's predictions will be compared against actual prices in the dataset to gauge accuracy.
+    
 
 </div>
 
@@ -1250,9 +1251,10 @@ Given the research questions and the features in our dataset, here are the propo
 - **Target Variable**: Price.
 - **Method**: Multiple linear regression will provide coefficients for each feature, guiding dynamic pricing adjustments.
 </div>
----
 
-<u>*Model 1: House Price Determinants*</u>
+----
+
+#### <u>*Model 1: House Price Determinants*</u>
 
 **Objective**: Identify the primary determinants of house prices in King County.
 - **Features**: All available attributes except the house price.
@@ -1332,7 +1334,7 @@ plot_qq_of_residuals(model)
     Model:                            OLS   Adj. R-squared:                  0.707
     Method:                 Least Squares   F-statistic:                     1522.
     Date:                Sun, 10 Sep 2023   Prob (F-statistic):               0.00
-    Time:                        11:39:01   Log-Likelihood:            -1.7190e+05
+    Time:                        22:16:15   Log-Likelihood:            -1.7190e+05
     No. Observations:               12609   AIC:                         3.438e+05
     Df Residuals:                   12588   BIC:                         3.440e+05
     Df Model:                          20                                         
@@ -1380,10 +1382,207 @@ plot_qq_of_residuals(model)
     
 
 
-The model achieved a training R-squared of 0.70 and a test R-squared of 0.71, indicating that it explains around 70% of the variance in house prices.
+**OLS Regression Results Interpretation for Extended Model**
+
+The regression results provide insights into a more complex model with multiple predictors:
+
+- **Model Scores:**
+  - **Training Score (0.71):** This suggests the model explains 71% of the variance in the training data.
+  - **Test Score (0.68):** The model explains 68% of the variance in the test data, which is slightly lower than the training score but still indicative of a reasonable fit.
+
+- **Coefficients:** The coefficients represent the change in the dependent variable (price) for a one-unit change in the predictor, holding other predictors constant. For instance, every additional bedroom reduces the price by approximately $35,744, while waterfront properties increase the price by about $613,791.
+
+- **Model Metrics:**
+  - **R-squared (0.707):** The model explains about 70.7% of the variance in the price. This is consistent with the given training score.
+  - **Adjusted R-squared (0.707):** Adjusted for the number of predictors in the model, the explained variance remains at 70.7%, which is a good sign.
+
+- **Statistical Significance:**
+  - Several predictors like `bedrooms`, `bathrooms`, `waterfront`, `view`, `grade`, `zipcode`, `lat`, `long`, and `age` have p-values near zero, suggesting they are statistically significant predictors.
+  - Some variables, such as `sqft_lot`, `floors`, `sqft_basement`, and `month_sold`, have larger p-values, indicating they might not be as statistically significant in predicting the house price.
+
+- **Residual Analysis:**
+  - The significant Omnibus and Jarque-Bera tests suggest potential deviations from normality in the residuals.
+  - The Durbin-Watson statistic is close to 2, indicating little autocorrelation in the residuals, which is favorable.
+
+- **Condition Number (7.3e+08):** The extremely large condition number warns of potential multicollinearity issues in the data. This suggests that some predictors might be correlated, which can affect the stability of the coefficient estimates.
+
+**Conclusion:**
+The extended regression model, with multiple predictors, captures a substantial portion of the variance in house prices, with a training and test score of 0.71 and 0.68 respectively. However, potential multicollinearity and non-normality in residuals hint at areas to refine. Careful consideration of variable selection and further diagnostic tests could enhance the model's reliability.
+
+
+#### <u>*Model 2: Impact of Living Space on House Price- the target variable with a strong positive linear relationship.*</u>
+
+**Objective**: Understand the relationship between the living space (in square feet) and the price of houses in King County.
+- **Features**: `sqft_living`.
+- **Target Variable**: Price.
+- **Method**: Simple linear regression was used to quantify the linear relationship between living space and house price. The predictor `sqft_living` was chosen due to its high correlation coefficient of approximately \(0.702\) with the target variable, indicating a strong positive linear relationship.
+
+
+```python
+# Scatter plot to visualize the relationship between sqft_living and price
+def create_scatter_plot(x, y, title, xlabel, ylabel, ax=None):
+    if ax is None:
+        plt.figure(figsize=(10, 6))
+        ax = plt.gca()
+    ax.scatter(x, y, alpha=0.5)
+    ax.set_title(title)
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
+    ax.grid(True)
+
+create_scatter_plot(df['sqft_living'], df['price'], 'Price vs. Sqft_Living', 'Sqft_Living', 'Price')
+plt.show()
+
+# Create variables to store the independent and dependent variables
+X_OLS = df[["sqft_living"]]
+y_OLS = df["price"]
+
+# Creating and fitting the Model
+results = sm.OLS(endog=y_OLS, exog=sm.add_constant(X_OLS)).fit()
+
+# Function to create scatter plot of residuals
+def residuals_plot(x, residuals, title, ax=None):
+    if ax is None:
+        fig, ax = plt.subplots(figsize=(8, 6))
+    sns.scatterplot(x=x, y=residuals, ax=ax, alpha=0.5, color="blue", label="Residuals")
+    ax.axhline(y=0, color="black", linestyle="--", label="Zero Residuals Line")
+    sns.regplot(x=x, y=residuals, ax=ax, scatter=False, color="red", lowess=True, label="Smooth Line")
+    ax.set_title(title, fontsize=16)
+    ax.set_xlabel("sqft_living", fontsize=12)
+    ax.set_ylabel("Residuals", fontsize=12)
+    ax.legend(loc="upper left")
+    ax.grid(True, linestyle='--', alpha=0.6)
+
+residuals_plot(df["sqft_living"], results.resid, "Residuals vs. sqft_living")
+plt.show()
+
+# Function to create QQ plot
+def create_qq_plot(residuals, title):
+    fig, ax = plt.subplots(figsize=(8, 6))
+    sm.qqplot(residuals, dist=stats.norm, line='45', fit=True, ax=ax)
+    ax.set_title(title, fontsize=16)
+    ax.set_xlabel("Theoretical Quantiles", fontsize=12)
+    ax.set_ylabel("Sample Quantiles", fontsize=12)
+    sns.despine()
+    plt.show()
+
+create_qq_plot(results.resid, "QQ Plot of Residuals")
+
+# Calculate the Box-Cox transformation for the dependent variable (y_OLS)
+transformed_y, lambda_value = stats.boxcox(y_OLS)
+print(f"Lambda value for Box-Cox transformation: {lambda_value}")
+
+# Histogram of Transformed y (Box-Cox)
+plt.hist(transformed_y, bins=50, density=True, alpha=0.5, color='b')
+plt.title('Histogram of Transformed y (Box-Cox)')
+plt.show()
+
+# Create and fit the OLS model using the transformed y
+box_cox_results = sm.OLS(endog=transformed_y, exog=sm.add_constant(X_OLS)).fit()
+box_cox_residuals = transformed_y - box_cox_results.fittedvalues
+
+residuals_plot(df["sqft_living"], box_cox_residuals, "Residuals vs. sqft_living (Box-Cox Transformed Model)")
+plt.show()
+
+create_qq_plot(box_cox_residuals, "QQ Plot of Residuals (Box-Cox Transformed Model)")
+
+# Print the summary of the OLS model and calculate RMSE
+print(box_cox_results.summary())
+predictions = box_cox_results.fittedvalues
+rmse_original_units = np.sqrt(np.mean((y_OLS - predictions) ** 2))
+print("RMSE in Original Units (Dollars):", rmse_original_units)
+```
+
+
+    
+![png](./Images/output_28_0.png)
+    
+
+
+
+    
+![png](./Images/output_28_1.png)
+    
+
+
+
+    
+![png](./Images/output_28_2.png)
+    
+
+
+    Lambda value for Box-Cox transformation: -0.24602697608824728
+    
+
+
+    
+![png](./Images/output_28_4.png)
+    
+
+
+
+    
+![png](./Images/output_28_5.png)
+    
+
+
+
+    
+![png](./Images/output_28_6.png)
+    
+
+
+                                OLS Regression Results                            
+    ==============================================================================
+    Dep. Variable:                      y   R-squared:                       0.457
+    Model:                            OLS   Adj. R-squared:                  0.457
+    Method:                 Least Squares   F-statistic:                 1.328e+04
+    Date:                Sun, 10 Sep 2023   Prob (F-statistic):               0.00
+    Time:                        22:16:18   Log-Likelihood:                 43401.
+    No. Observations:               15762   AIC:                        -8.680e+04
+    Df Residuals:                   15760   BIC:                        -8.678e+04
+    Df Model:                           1                                         
+    Covariance Type:            nonrobust                                         
+    ===============================================================================
+                      coef    std err          t      P>|t|      [0.025      0.975]
+    -------------------------------------------------------------------------------
+    const           3.8672      0.000   1.27e+04      0.000       3.867       3.868
+    sqft_living   1.54e-05   1.34e-07    115.237      0.000    1.51e-05    1.57e-05
+    ==============================================================================
+    Omnibus:                      222.257   Durbin-Watson:                   1.982
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              232.600
+    Skew:                          -0.286   Prob(JB):                     3.10e-51
+    Kurtosis:                       3.164   Cond. No.                     5.65e+03
+    ==============================================================================
+    
+    Notes:
+    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+    [2] The condition number is large, 5.65e+03. This might indicate that there are
+    strong multicollinearity or other numerical problems.
+    RMSE in Original Units (Dollars): 656934.8069415551
+    
+
+**OLS Regression Results Interpretation**
+
+The OLS regression provides insights into the relationship between `sqft_living` and the dependent variable:
+
+- **R-squared (0.457):** This indicates that the model explains about 45.7% of the variance in the dependent variable. While this captures a significant portion of the relationship, there's still a substantial amount of variance that remains unexplained.
+
+- **Coefficient for sqft_living (1.54e-05):** This coefficient suggests that for every unit increase in square footage (`sqft_living`), the dependent variable increases by \(1.54 \times 10^{-5}\). The predictor's p-value is almost zero, confirming its statistical significance in the model.
+
+- **Residual Analysis:**
+  - **Omnibus and Jarque-Bera Tests:** Both tests are significant, implying that the model's residuals might not be normally distributed. This might violate one of the linear regression assumptions.
+  - **Durbin-Watson (1.982):** This value is close to 2, which is a good sign as it suggests that there's little autocorrelation in the residuals.
+
+- **RMSE (656,934.8):** The Root Mean Square Error measures the average prediction error of the model. An RMSE of 656,934.8 units indicates a considerable prediction error.
+
+- **Notes on Condition Number (5.65e+03):** The large condition number suggests that there might be strong multicollinearity in the data or other numerical problems that can affect the stability and reliability of the regression coefficients.
+
+**Conclusion:**
+While the regression model captures some aspects of the relationship between `sqft_living` and the dependent variable, there's room for improvement. The significant RMSE and potential multicollinearity issues highlight areas to address in model refinement.
 
 ---
-<u>*Model 2: Property Attributes and Their Influence on Market Value*</u>
+#### <u>*Model 3: Property Attributes and Their Influence on Market Value*</u>
 
 - **Objective:** Assess how property attributes, including geographical aspects, affect market value.
 - **Features:** Variables like `grade`, `condition`, `view`, `sqft_living`, `age_house`, and others describe the property.
@@ -1394,8 +1593,12 @@ The model achieved a training R-squared of 0.70 and a test R-squared of 0.71, in
 
 ```python
 # 1. Box-Cox Transformation of the Target Variable
-y_original = df["price"]
-transformed_y, _ = stats.boxcox(y_original)
+# create variables to store the independent and dependent variables
+X_OLS = df[["sqft_living"]]
+y_OLS = df["price"]
+
+# Box-Cox transformation of y_OLS
+transformed_y, _ = stats.boxcox(y_OLS)
 df['transformed_price'] = transformed_y
 
 # 2. One-hot Encoding & Model Building with Extended Features
@@ -1441,7 +1644,7 @@ plot_diagnostics(results_extended)
 
 # RMSE Calculation
 predictions = results_extended.fittedvalues
-rmse_original_units = np.sqrt(np.mean((y_original - predictions) ** 2))
+rmse_original_units = np.sqrt(np.mean((y_OLS - predictions) ** 2))
 print("RMSE in Original Units (Dollars):", rmse_original_units)
 
 ```
@@ -1452,7 +1655,7 @@ print("RMSE in Original Units (Dollars):", rmse_original_units)
     Model:                            OLS   Adj. R-squared:                  0.547
     Method:                 Least Squares   F-statistic:                     1271.
     Date:                Sun, 10 Sep 2023   Prob (F-statistic):               0.00
-    Time:                        11:39:01   Log-Likelihood:                 44837.
+    Time:                        22:16:18   Log-Likelihood:                 44837.
     No. Observations:               15762   AIC:                        -8.964e+04
     Df Residuals:                   15746   BIC:                        -8.952e+04
     Df Model:                          15                                         
@@ -1491,14 +1694,197 @@ print("RMSE in Original Units (Dollars):", rmse_original_units)
 
 
     
-![png](./Images/output_28_1.png)
+![png](./Images/output_31_1.png)
     
 
 
     RMSE in Original Units (Dollars): 656934.8063250879
     
 
+**OLS Regression Results Interpretation for Transformed Price Model**
+
+The regression results shed light on a model where the dependent variable is the `transformed_price`. 
+
+- **Model Metrics:**
+  - **R-squared (0.548):** The model explains 54.8% of the variance in the transformed price. This indicates a moderate fit, suggesting that over 45% of the variance in the transformed price remains unexplained by the predictors.
+
+- **Coefficient Interpretations:**
+  - **sqft_living (8.279e-06):** For every unit increase in `sqft_living`, the `transformed_price` increases by \(8.279 \times 10^{-6}\). This predictor is statistically significant with a p-value close to zero.
+  - **Grade Variables:** Variables representing different grades (`grade_4.0` to `grade_13.0`) have coefficients indicating their impact on `transformed_price` relative to some baseline grade. However, not all of them are statistically significant. For example, `grade_9.0` to `grade_13.0` show statistical significance with p-values less than 0.05, while others like `grade_5.0` and `grade_6.0` have larger p-values, suggesting they might not be significant predictors.
+  - **Condition Variables:** Variables representing different property conditions (`condition_1` to `condition_4`) show their impact on the `transformed_price`. Among these, only `condition_1` is statistically significant with a p-value less than 0.05.
+
+- **Residual Analysis:**
+  - The Omnibus and Jarque-Bera tests are significant, suggesting potential deviations from normality in the residuals.
+  - The Durbin-Watson statistic is close to 2, indicating there is likely no autocorrelation in the residuals.
+
+- **Condition Number (9.5e+05):** The large condition number is a warning sign for potential multicollinearity issues among the predictors. This can destabilize the coefficient estimates and may need further investigation.
+
+**Conclusion:**
+The regression model for the `transformed_price` captures a moderate amount of the variance, with `sqft_living` and certain grade levels emerging as significant predictors. However, potential multicollinearity issues and non-normality in residuals highlight areas for model refinement. Considering the significance and relevance of predictors can enhance the model's predictive power.
+
+#### <u>*Model 4: Dynamic Pricing Recommendations*</u>
+
+**Objective**: Develop a model to offer real-time pricing suggestions for rental properties under "Haven-Kings".
+- **Features**: Those attributes that are deemed significant for rental pricing, such as location (`lat`, `long`), `view`, property size (`sqft_living`, `sqft_lot`), and others.
+- **Target Variable**: Price.
+- **Method**: Multiple linear regression will provide coefficients for each feature, guiding dynamic pricing adjustments.
+
+
+```python
+# Encode the view variable
+df_encoded = pd.get_dummies(df, columns=['view'], prefix='view', drop_first=True)
+
+# Create a binary column 'renovated'
+df_encoded['renovated'] = df_encoded['yr_renovated'].apply(lambda x: 1 if x > 0 else 0)
+
+# Visualization
+
+# 1. Distribution of prices based on renovation status
+plt.figure(figsize=(10, 5))
+plt.subplot(1, 2, 1)
+plt.boxplot([df_encoded[df_encoded['renovated'] == 0]['price'], df_encoded[df_encoded['renovated'] == 1]['price']],
+            vert=False, labels=['Non-Renovated', 'Renovated'])
+plt.title('Price by Renovation Status')
+plt.xlabel('Price')
+plt.ylabel('Renovation Status')
+
+# 2. Distribution of prices based on latitude and longitude
+plt.subplot(1, 2, 2)
+plt.scatter(df_encoded['lat'], df_encoded['price'], alpha=0.2, label='Latitude', color='blue')
+plt.scatter(df_encoded['long'], df_encoded['price'], alpha=0.2, label='Longitude', color='red')
+plt.title('Price by Latitude and Longitude')
+plt.xlabel('Location (Lat/Long)')
+plt.ylabel('Price')
+plt.legend(loc='upper left')
+plt.tight_layout()
+plt.show()
+
+# 3. Distribution of prices based on sqft_living and sqft_lot
+plt.figure(figsize=(10, 5))
+plt.subplot(1, 2, 1)
+plt.scatter(df_encoded['sqft_living'], df_encoded['price'], alpha=0.2)
+plt.title('Price by Sqft Living')
+plt.xlabel('Sqft Living')
+plt.ylabel('Price')
+
+plt.subplot(1, 2, 2)
+plt.scatter(df_encoded['sqft_lot'], df_encoded['price'], alpha=0.2)
+plt.title('Price by Sqft Lot')
+plt.xlabel('Sqft Lot')
+plt.ylabel('Price')
+plt.tight_layout()
+plt.show()
+
+# 4. Distribution of prices based on view
+view_columns = [col for col in df_encoded.columns if 'view_' in col]
+view_prices = [df_encoded[df_encoded[col] == 1]['price'] for col in view_columns]
+
+plt.figure(figsize=(10, 5))
+plt.boxplot(view_prices, vert=False, labels=view_columns)
+plt.title('Price by View')
+plt.xlabel('Price')
+plt.ylabel('View Quality')
+plt.grid(True, axis='x')
+plt.show()
+
+# Regression Analysis
+
+# Define the selected columns for regression
+selected_columns = ['lat', 'long', 'sqft_living', 'sqft_lot'] + view_columns + ['renovated']
+
+X = df_encoded[selected_columns]
+y = df_encoded['price']
+
+# Adding a constant for the intercept
+X = sm.add_constant(X)
+
+# Regression Model
+results = sm.OLS(endog=y, exog=X).fit()
+
+# Summary of Regression Model
+print(results.summary())
+
+```
+
+
+    
+![png](./Images/output_34_0.png)
+    
+
+
+
+    
+![png](./Images/output_34_1.png)
+    
+
+
+
+    
+![png](./Images/output_34_2.png)
+    
+
+
+                                OLS Regression Results                            
+    ==============================================================================
+    Dep. Variable:                  price   R-squared:                       0.628
+    Model:                            OLS   Adj. R-squared:                  0.628
+    Method:                 Least Squares   F-statistic:                     2953.
+    Date:                Sun, 10 Sep 2023   Prob (F-statistic):               0.00
+    Time:                        22:16:25   Log-Likelihood:            -2.1676e+05
+    No. Observations:               15762   AIC:                         4.335e+05
+    Df Residuals:                   15752   BIC:                         4.336e+05
+    Df Model:                           9                                         
+    Covariance Type:            nonrobust                                         
+    ===============================================================================
+                      coef    std err          t      P>|t|      [0.025      0.975]
+    -------------------------------------------------------------------------------
+    const        -5.88e+07   1.73e+06    -33.973      0.000   -6.22e+07   -5.54e+07
+    lat          6.798e+05   1.33e+04     51.238      0.000    6.54e+05    7.06e+05
+    long        -2.163e+05   1.39e+04    -15.551      0.000   -2.44e+05   -1.89e+05
+    sqft_living   263.6425      2.162    121.932      0.000     259.404     267.881
+    sqft_lot        0.0462      0.045      1.026      0.305      -0.042       0.134
+    view_1.0     1.291e+05   9009.802     14.329      0.000    1.11e+05    1.47e+05
+    view_2.0     1.424e+05   1.48e+04      9.653      0.000    1.13e+05    1.71e+05
+    view_3.0     1.939e+05   1.26e+04     15.374      0.000    1.69e+05    2.19e+05
+    view_4.0     5.611e+05   1.52e+04     37.022      0.000    5.31e+05    5.91e+05
+    renovated    1.028e+05   9169.272     11.215      0.000    8.49e+04    1.21e+05
+    ==============================================================================
+    Omnibus:                    12006.309   Durbin-Watson:                   1.976
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           787116.490
+    Skew:                           3.104   Prob(JB):                         0.00
+    Kurtosis:                      37.058   Cond. No.                     4.26e+07
+    ==============================================================================
+    
+    Notes:
+    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+    [2] The condition number is large, 4.26e+07. This might indicate that there are
+    strong multicollinearity or other numerical problems.
+    
+
+OLS Regression Analysis Summary:
+
+1. **Model Overview**:
+   - **R-squared**: 0.628 - This model explains approximately 62.8% of the variance in house prices.
+   - The model is statistically significant with a very low p-value, indicating a very low chance that observed relationships are due to random chance.
+
+2. **Key Coefficients**:
+   - Latitude (lat): Positive relation. An increase in latitude is associated with an increase in house price by approximately $679,800.
+   - Longitude (long): Negative relation. An increase in longitude reduces the house price by approximately $216,300.
+   - Sqft of Living Space (sqft_living): Positive relation. An increase in living space (in sqft) raises the house price by approximately $263.64.
+   
+   - View Quality: Houses with better views (especially `view_4.0` category) have significantly higher prices.
+   - Renovated: Renovated houses are priced about $102,800 higher than non-renovated houses on average.
+
+3. **Considerations**:
+   - **Sqft of Lot Space (sqft_lot)**: This predictor might not be significant due to a p-value greater than 0.05.
+   - **Residuals**: They might not be normally distributed.
+   - **Multicollinearity**: Some predictors might be correlated, as indicated by the large condition number.
+
+### Conclusion
+
+
 
 ```python
 
 ```
+

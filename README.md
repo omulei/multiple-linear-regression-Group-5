@@ -14,7 +14,7 @@
    
 ---------------------
                 
-<img src="Images/Country%20Home.png" width="500" height="200">
+<img src="Images/Country%20Home.png" width="1000" height="250">
 
 
 **Business Case:**

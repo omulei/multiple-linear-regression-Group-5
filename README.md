@@ -273,8 +273,6 @@ While the regression model captures some aspects of the relationship between `sq
 - **Method:** Multiple linear regression, enhanced with preprocessing techniques like Box-Cox transformation and one-hot encoding.
 
 
-
-
                                 OLS Regression Results                            
     ==============================================================================
     Dep. Variable:      transformed_price   R-squared:                       0.548
@@ -315,8 +313,7 @@ While the regression model captures some aspects of the relationship between `sq
     Notes:
     [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
     [2] The condition number is large, 9.5e+05. This might indicate that there are
-    strong multicollinearity or other numerical problems.
-    
+    strong multicollinearity or other numerical problems.   
 
 
     

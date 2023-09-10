@@ -81,68 +81,9 @@ Given the research questions and the features in our dataset, here are the propo
 - **Target Variable**: Price.
 - **Method**: Multiple linear regression will be used to understand the contribution of each feature to the house price.
 
-
-
-    Training Score: 0.71
-    Test Score: 0.68
-    Coefficients: [-3.57439404e+04  4.70431772e+04  1.21620206e+02  1.08804339e-01
-      8.63177465e+03  6.13690732e+05  6.15776333e+04  2.90407722e+04
-      9.50660820e+04  6.16625223e+01  3.00678038e+01  2.03930440e+01
-     -5.39723872e+02  5.96059842e+05 -1.98415708e+05  2.08665048e+01
-     -3.51055164e-01  1.38101384e+03  3.90461119e+04  2.74425344e+03]
-                                OLS Regression Results                            
-    ==============================================================================
-    Dep. Variable:                  price   R-squared:                       0.707
-    Model:                            OLS   Adj. R-squared:                  0.707
-    Method:                 Least Squares   F-statistic:                     1522.
-    Date:                Sun, 10 Sep 2023   Prob (F-statistic):               0.00
-    Time:                        22:16:15   Log-Likelihood:            -1.7190e+05
-    No. Observations:               12609   AIC:                         3.438e+05
-    Df Residuals:                   12588   BIC:                         3.440e+05
-    Df Model:                          20                                         
-    Covariance Type:            nonrobust                                         
-    =================================================================================
-                        coef    std err          t      P>|t|      [0.025      0.975]
-    ---------------------------------------------------------------------------------
-    const         -7.912e+07    1.3e+07     -6.073      0.000   -1.05e+08   -5.36e+07
-    bedrooms      -3.574e+04   2427.792    -14.723      0.000   -4.05e+04    -3.1e+04
-    bathrooms      4.704e+04   4288.807     10.969      0.000    3.86e+04    5.54e+04
-    sqft_living     121.6202     23.290      5.222      0.000      75.968     167.273
-    sqft_lot          0.1088      0.061      1.771      0.077      -0.012       0.229
-    floors         8631.7746   4717.448      1.830      0.067    -615.142    1.79e+04
-    waterfront     6.137e+05   2.36e+04     25.995      0.000    5.67e+05     6.6e+05
-    view           6.158e+04   3043.718     20.231      0.000    5.56e+04    6.75e+04
-    condition      2.904e+04   3093.270      9.388      0.000     2.3e+04    3.51e+04
-    grade          9.507e+04   2830.659     33.584      0.000    8.95e+04    1.01e+05
-    sqft_above       61.6625     23.163      2.662      0.008      16.260     107.065
-    sqft_basement    30.0678     22.990      1.308      0.191     -14.996      75.131
-    yr_renovated     20.3930      4.797      4.251      0.000      10.989      29.797
-    zipcode        -539.7239     43.234    -12.484      0.000    -624.469    -454.979
-    lat            5.961e+05   1.41e+04     42.381      0.000    5.68e+05    6.24e+05
-    long          -1.984e+05   1.72e+04    -11.512      0.000   -2.32e+05   -1.65e+05
-    sqft_living15    20.8665      4.549      4.588      0.000      11.951      29.782
-    sqft_lot15       -0.3511      0.095     -3.705      0.000      -0.537      -0.165
-    month_sold     1381.0138    923.466      1.495      0.135    -429.121    3191.149
-    year_sold      3.905e+04   6184.963      6.313      0.000    2.69e+04    5.12e+04
-    age            2744.2534     94.990     28.890      0.000    2558.059    2930.448
-    ==============================================================================
-    Omnibus:                    10891.167   Durbin-Watson:                   1.966
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):          1206511.382
-    Skew:                           3.620   Prob(JB):                         0.00
-    Kurtosis:                      50.372   Cond. No.                     7.30e+08
-    ==============================================================================
-    
-    Notes:
-    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-    [2] The condition number is large, 7.3e+08. This might indicate that there are
-    strong multicollinearity or other numerical problems.
-    
-
-
     
 ![png](./Images/output_25_1.png)
     
-
 
 **OLS Regression Results Interpretation for Extended Model**
 
@@ -272,57 +213,9 @@ While the regression model captures some aspects of the relationship between `sq
 - **Target:** The property's market value or "price".
 - **Method:** Multiple linear regression, enhanced with preprocessing techniques like Box-Cox transformation and one-hot encoding.
 
-
-                                OLS Regression Results                            
-    ==============================================================================
-    Dep. Variable:      transformed_price   R-squared:                       0.548
-    Model:                            OLS   Adj. R-squared:                  0.547
-    Method:                 Least Squares   F-statistic:                     1271.
-    Date:                Sun, 10 Sep 2023   Prob (F-statistic):               0.00
-    Time:                        22:16:18   Log-Likelihood:                 44837.
-    No. Observations:               15762   AIC:                        -8.964e+04
-    Df Residuals:                   15746   BIC:                        -8.952e+04
-    Df Model:                          15                                         
-    Covariance Type:            nonrobust                                         
-    ===============================================================================
-                      coef    std err          t      P>|t|      [0.025      0.975]
-    -------------------------------------------------------------------------------
-    const           3.8670      0.014    267.524      0.000       3.839       3.895
-    sqft_living  8.279e-06   1.94e-07     42.681      0.000     7.9e-06    8.66e-06
-    grade_4.0      -0.0116      0.015     -0.797      0.425      -0.040       0.017
-    grade_5.0      -0.0052      0.014     -0.367      0.713      -0.033       0.022
-    grade_6.0       0.0038      0.014      0.273      0.785      -0.024       0.031
-    grade_7.0       0.0127      0.014      0.900      0.368      -0.015       0.040
-    grade_8.0       0.0214      0.014      1.520      0.129      -0.006       0.049
-    grade_9.0       0.0295      0.014      2.093      0.036       0.002       0.057
-    grade_10.0      0.0353      0.014      2.501      0.012       0.008       0.063
-    grade_11.0      0.0381      0.014      2.698      0.007       0.010       0.066
-    grade_12.0      0.0407      0.014      2.863      0.004       0.013       0.069
-    grade_13.0      0.0395      0.015      2.676      0.007       0.011       0.068
-    condition_1    -0.0097      0.003     -2.789      0.005      -0.016      -0.003
-    condition_2    -0.0044      0.003     -1.347      0.178      -0.011       0.002
-    condition_3    -0.0013      0.003     -0.389      0.697      -0.008       0.005
-    condition_4     0.0045      0.003      1.377      0.168      -0.002       0.011
-    ==============================================================================
-    Omnibus:                       88.275   Durbin-Watson:                   1.980
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):               89.641
-    Skew:                          -0.182   Prob(JB):                     3.43e-20
-    Kurtosis:                       3.057   Cond. No.                     9.50e+05
-    ==============================================================================
-    
-    Notes:
-    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-    [2] The condition number is large, 9.5e+05. This might indicate that there are
-    strong multicollinearity or other numerical problems.   
-
-
     
 ![png](./Images/output_31_1.png)
-    
-
-
-RMSE in Original Units (Dollars): 656934.8063250879
-    
+      
 
 **OLS Regression Results Interpretation for Transformed Price Model**
 

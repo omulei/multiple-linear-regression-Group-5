@@ -897,7 +897,7 @@ for col in X.columns:
 
 
     
-![png](/Images/output_17_0.png)
+![png](./Images/output_17_0.png)
     
 
 

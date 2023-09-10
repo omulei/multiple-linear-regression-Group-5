@@ -14,7 +14,7 @@
    
 ---------------------
                 
-<img src="Images/Country%20Home.png" width="1000" height="500">
+<img src="Images/Country%20Home.png" width="950" height="500">
 
 
 **Business Case:**
@@ -897,7 +897,7 @@ for col in X.columns:
 
 
     
-![png](output_17_0.png)
+![png](/Images/output_17_0.png)
     
 
 

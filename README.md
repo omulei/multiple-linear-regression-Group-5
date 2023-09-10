@@ -903,115 +903,115 @@ for col in X.columns:
 
 
     
-![png](output_17_1.png)
+![png](./Images/output_17_1.png)
     
 
 
 
     
-![png](output_17_2.png)
+![png](./Images/output_17_2.png)
     
 
 
 
     
-![png](output_17_3.png)
+![png](./Images/output_17_3.png)
     
 
 
 
     
-![png](output_17_4.png)
+![png](./Images/output_17_4.png)
     
 
 
 
     
-![png](output_17_5.png)
+![png](./Images/output_17_5.png)
     
 
 
 
     
-![png](output_17_6.png)
+![png](./Images/output_17_6.png)
     
 
 
 
     
-![png](output_17_7.png)
+![png](./Images/output_17_7.png)
     
 
 
 
     
-![png](output_17_8.png)
+![png](./Images/output_17_8.png)
     
 
 
 
     
-![png](output_17_9.png)
+![png](./Images/output_17_9.png)
     
 
 
 
     
-![png](output_17_10.png)
+![png](./Images/output_17_10.png)
     
 
 
 
     
-![png](output_17_11.png)
+![png](./Images/output_17_11.png)
     
 
 
 
     
-![png](output_17_12.png)
+![png](./Images/output_17_12.png)
     
 
 
 
     
-![png](output_17_13.png)
+![png](./Images/output_17_13.png)
     
 
 
 
     
-![png](output_17_14.png)
+![png](./Images/output_17_14.png)
     
 
 
 
     
-![png](output_17_15.png)
+![png](./Images/output_17_15.png)
     
 
 
 
     
-![png](output_17_16.png)
+![png](./Images/output_17_16.png)
     
 
 
 
     
-![png](output_17_17.png)
+![png](./Images/output_17_17.png)
     
 
 
 
     
-![png](output_17_18.png)
+![png](./Images/output_17_18.png)
     
 
 
 
     
-![png](output_17_19.png)
+![png](./Images/output_17_19.png)
     
 
 
@@ -1196,7 +1196,7 @@ plt.show()
 
 
     
-![png](output_21_0.png)
+![png](./Images/output_21_0.png)
     
 
 
@@ -1376,7 +1376,7 @@ plot_qq_of_residuals(model)
 
 
     
-![png](output_25_1.png)
+![png](./Images/output_25_1.png)
     
 
 
@@ -1491,7 +1491,7 @@ print("RMSE in Original Units (Dollars):", rmse_original_units)
 
 
     
-![png](output_28_1.png)
+![png](./Images/output_28_1.png)
     
 
 

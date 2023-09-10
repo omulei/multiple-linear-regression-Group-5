@@ -17,19 +17,21 @@
 <img src="Images/Country%20Home.png" width="950" height="500">
 
 
-**Business Case:**
+#### **Business Case:**
 In the thriving real estate market of King County, the capacity to make strategic pricing decisions can either enhance profits or turn assets into liabilities. Haven-Kings Property Management, with its vast portfolio, stands at a pivotal juncture where conventional pricing methods no longer suffice. The digital age demands a shift from age-old practices like the Comparative Market Analysis (CMA) and the "1% Rule" to a more agile, data-driven approach. By leveraging advanced analytical methods, such as multiple regression analysis, property management firms can tap into precise pricing strategies, enhancing revenue streams and ensuring sustainable growth.
 
-**Overview:**
+#### **Overview:**
 This project aims to harness the power of data analytics to revolutionize Haven-Kings Property Management's pricing strategies in King County's competitive real estate landscape.
 
-**Objective:**
+#### **Objective:**
+
 Guided by data insights and multiple regression analysis, the team sets out to:
 1. **Optimize House Pricing:** Craft a model that tailors pricing based on property features, regional nuances, and emerging market trends.
 
 2. **Dynamic Pricing Recommendations:** Pivot rental prices in real-time, aligning with market fluctuations and property specifics.
 
-**Research Questions:**
+#### **Research Questions:**
+
 1. **House Pricing:** 
    - Dissect key determinants shaping house prices in King County.
    - Analyze the interplay between property attributes and their market value.
@@ -40,18 +42,15 @@ Guided by data insights and multiple regression analysis, the team sets out to:
    - Spotlight pivotal factors for adaptive rental rate revisions.
    - Assess the ramifications of dynamic pricing on revenue trajectories and market stature.
 
-**Data Source:**
+#### **Data Source:**
 The foundation of this project rests on the [kc_house_data.csv](./data/kc_house_data.csv) dataset from King County House Sales.
 
------
+----
 
------
+#### Data Exploration:
 
-### Data Exploration:
+We begin with data exploration to better understand how each predictor correlates with price and plot the correlations.
 
-Let's begin with data exploration to better understand the dataset's characteristics.
-
-There are several features where there is a clear linear relationship with price, but there are some features where the relationship is not so clear.
     
 ![png](./Images/output_21_0.png)
     
@@ -66,50 +65,14 @@ We also note that `sqft_lot` and `sqft_lot15` are highly positively correlated a
 ---
 ### Modeling
 
-To address the research questions using multiple regression models,[Julliet](https://github.com/Iswana-O) and [Wayne](https://github.com/waynekipngeno) identified the appropriate independent variables (features) for each question and then created models based on those variables to predict the dependent variable (target). For our dataset, the dependent variable will be `price` for most models, as many of the questions revolve around house pricing and its determinants.
+To address the research questions using multiple regression models we identified the appropriate independent variables (features) for each question and then created models based on those variables to predict the dependent variable (target). For our dataset, the dependent variable will be `price` for most models, as many of the questions revolve around house pricing and its determinants.
 
 Given the research questions and the features in our dataset, here are the proposed models:
 
+---
+
 #### 1. **House Pricing Models**:
-
-<div style="margin-left: 40px;">
-
-<u>*Model 1: House Price Determinants*</u>
-
-**Objective**: Identify the primary determinants of house prices in King County.
-- **Features**: All available attributes except the house price.
-- **Target Variable**: Price.
-- **Method**: Multiple linear regression will be used to understand the contribution of each feature to the house price.
-
-<u>*Model 2: Impact of Living Space on House Price*</u>
-
-**Objective**: Understand the relationship between the living space (in square feet) and the price of houses in King County.
-- **Features**: `sqft_living`.
-- **Target Variable**: Price.
-- **Method**: Simple linear regression was used to quantify the linear relationship between living space and house price. The predictor `sqft_living` was chosen due to its high correlation coefficient of approximately \(0.702\) with the target variable, indicating a strong positive linear relationship.
-
-<u>*Model 3: Property Attributes and Their Influence on Market Value*</u>
-
-- **Objective:** Assess how property attributes, including geographical aspects, affect market value.
-- **Features:** Variables like `grade`, `condition`, `view`, `sqft_living`, `age_house`, and others describe the property.
-- **Target:** The property's market value or "price".
-- **Method:** Multiple linear regression, enhanced with preprocessing techniques like Box-Cox transformation and one-hot encoding.
-    
-
-</div>
-
-#### 2. **Dynamic Pricing Recommendations Models**:
 <div style="margin-left: 40px;"> 
-    
-<u>*Model 4: Dynamic Pricing Recommendations*</u>
-
-**Objective**: Develop a model to offer real-time pricing suggestions for rental properties under "Haven-Kings".
-- **Features**: Those attributes that are deemed significant for rental pricing, such as location (`lat`, `long`), `view`, property size (`sqft_living`, `sqft_lot`), and others.
-- **Target Variable**: Price.
-- **Method**: Multiple linear regression will provide coefficients for each feature, guiding dynamic pricing adjustments.
-</div>
-
-----
 
 #### <u>*Model 1: House Price Determinants*</u>
 
@@ -208,7 +171,7 @@ The regression results provide insights into a more complex model with multiple 
 **Conclusion:**
 The extended regression model, with multiple predictors, captures a substantial portion of the variance in house prices, with a training and test score of 0.71 and 0.68 respectively. However, potential multicollinearity and non-normality in residuals hint at areas to refine. Careful consideration of variable selection and further diagnostic tests could enhance the model's reliability.
 
-
+---
 #### <u>*Model 2: Impact of Living Space on House Price- the target variable with a strong positive linear relationship.*</u>
 
 **Objective**: Understand the relationship between the living space (in square feet) and the price of houses in King County.
@@ -384,6 +347,12 @@ The regression results shed light on a model where the dependent variable is the
 
 **Conclusion:**
 The regression model for the `transformed_price` captures a moderate amount of the variance, with `sqft_living` and certain grade levels emerging as significant predictors. However, potential multicollinearity issues and non-normality in residuals highlight areas for model refinement. Considering the significance and relevance of predictors can enhance the model's predictive power.
+    
+</div>
+---
+
+#### 2. **Dynamic Pricing Recommendations Models**:
+<div style="margin-left: 40px;">
 
 #### <u>*Model 4: Dynamic Pricing Recommendations*</u>
 
@@ -466,6 +435,10 @@ OLS Regression Analysis Summary:
    - **Sqft of Lot Space (sqft_lot)**: This predictor might not be significant due to a p-value greater than 0.05.
    - **Residuals**: They might not be normally distributed.
    - **Multicollinearity**: Some predictors might be correlated, as indicated by the large condition number.
+   
+</div>
+
+---
 
 ### Conclusion
 

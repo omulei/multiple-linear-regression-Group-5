@@ -7,12 +7,14 @@
                 - [Wayne Kipngeno Korir](https://github.com/waynekipngeno)
                 - [Eva Kiio](https://github.com/evamwende)
                 - [Oscar Mulei](https://github.com/omulei)
+                
 ---------------------
    **Supervisor:** 
    [Asha Deen](https://moringaschool.com/courses/data-science-course-part-time/)
+   
 ---------------------
                 
-<img src="Images/Country%20Home.png" width="1000" height="50">
+<img src="Images/Country%20Home.png" width="500" height="200">
 
 
 **Business Case:**

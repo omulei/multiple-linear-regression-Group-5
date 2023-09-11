@@ -14,9 +14,7 @@
     - [Dynamic Pricing Recommendations Models](#dynamic-pricing-recommendations-models)
 10. [Conclusions](#conclusions)
 11. [Recommendations and Action Points](#recommendations-and-action-points)
-12. [Tech Stack](#tech-stack)
-13. [How to Run This Project](#how-to-run-this-project)
-14. [Acknowledgments](#acknowledgments)
+
 
 ## Project Team
 - [Julliet Iswana](https://github.com/Iswana-O)
@@ -71,24 +69,82 @@ To address the research questions, multiple regression models are employed, each
 
 ### House Pricing Models
 #### Model 1: House Price Determinants
-- **Objective**: ...
-- **Methodology**: ...
-- **Results**: ...
+- **Objective**: Identify the primary determinants of house prices in King County.
+- - **Method**: Multiple linear regression will be used to understand the contribution of each feature to the house price.
+- **OLS Regression Results Interpretation for Extended Model**
+
+The regression results provide insights into a more complex model with multiple predictors:
+
+- **Model Scores:**
+  - **Training Score (0.71):** This suggests the model explains 71% of the variance in the training data.
+  - **Test Score (0.68):** The model explains 68% of the variance in the test data, which is slightly lower than the training score but still indicative of a reasonable fit.
+
+- **Coefficients:** The coefficients represent the change in the dependent variable (price) for a one-unit change in the predictor, holding other predictors constant. For instance, every additional bedroom reduces the price by approximately $35,744, while waterfront properties increase the price by about $613,791.
+
+- **Model Metrics:**
+  - **R-squared (0.707):** The model explains about 70.7% of the variance in the price. This is consistent with the given training score.
+  - **Adjusted R-squared (0.707):** Adjusted for the number of predictors in the model, the explained variance remains at 70.7%, which is a good sign.
 
 ![Model 1 Results](./Images/output_25_1.png)
 
 #### Model 2: Impact of Living Space on House Price
-[Details here]
+**Objective**: Understand the relationship between the living space (in square feet) and the price of houses in King County.
+- **Features**: `sqft_living`.
+- **Target Variable**: Price.
+- **Method**: Simple linear regression was used to quantify the linear relationship between living space and house price. The predictor `sqft_living` was chosen due to its high correlation coefficient of approximately \(0.702\) with the target variable, indicating a strong positive linear relationship.
+- **OLS Regression Results Interpretation**
+
+The OLS regression provides insights into the relationship between `sqft_living` and the dependent variable:
+
+- **R-squared (0.457):** This indicates that the model explains about 45.7% of the variance in the dependent variable. While this captures a significant portion of the relationship, there's still a substantial amount of variance that remains unexplained.
+
+- **Coefficient for sqft_living (1.54e-05):** This coefficient suggests that for every unit increase in square footage (`sqft_living`), the dependent variable increases by \(1.54 \times 10^{-5}\). The predictor's p-value is almost zero, confirming its statistical significance in the model.
 
 ![Model 2 Results](./Images/output_28_0.png)
 
 #### Model 3: Property Attributes and Their Influence on Market Value
+- **Objective:** Assess how property attributes, including geographical aspects, affect market value.
+- **Features:** Variables like `grade`, `condition`, `view`, `sqft_living`, `age_house`, and others describe the property.
+- **Target:** The property's market value or "price".
+- **Method:** Multiple linear regression, enhanced with preprocessing techniques like Box-Cox transformation and one-hot encoding.
+-**OLS Regression Results Interpretation for Transformed Price Model**
+
+The regression results shed light on a model where the dependent variable is the `transformed_price`. 
+
+- **Model Metrics:**
+  - **R-squared (0.548):** The model explains 54.8% of the variance in the transformed price. This indicates a moderate fit, suggesting that over 45% of the variance in the transformed price remains unexplained by the predictors.
+
+- **Coefficient Interpretations:**
+  - **sqft_living (8.279e-06):** For every unit increase in `sqft_living`, the `transformed_price` increases by \(8.279 \times 10^{-6}\). This predictor is statistically significant with a p-value close to zero.
+  - **Grade Variables:** Variables representing different grades (`grade_4.0` to `grade_13.0`) have coefficients indicating their impact on `transformed_price` relative to some baseline grade. However, not all of them are statistically significant. For example, `grade_9.0` to `grade_13.0` show statistical significance with p-values less than 0.05, while others like `grade_5.0` and `grade_6.0` have larger p-values, suggesting they might not be significant predictors.
+  - **Condition Variables:** Variables representing different property conditions (`condition_1` to `condition_4`) show their impact on the `transformed_price`. Among these, only `condition_1` is statistically significant with a p-value less than 0.05.
 
 ![Model 3 Image](./Images/output_31_1.png)
 
 ### Dynamic Pricing Recommendations Models
 #### Model 4: Dynamic Pricing Recommendations
-[Details here]
+- **Objective**: Develop a model to offer real-time pricing suggestions for rental properties under "Haven-Kings".
+- **Features**: Those attributes that are deemed significant for rental pricing, such as location (`lat`, `long`), `view`, property size (`sqft_living`, `sqft_lot`), and others.
+- **Target Variable**: Price.
+- **Method**: Multiple linear regression will provide coefficients for each feature, guiding dynamic pricing adjustments.
+OLS Regression Analysis Summary:
+
+1. **Model Overview**:
+   - **R-squared**: 0.628 - This model explains approximately 62.8% of the variance in house prices.
+   - The model is statistically significant with a very low p-value, indicating a very low chance that observed relationships are due to random chance.
+
+2. **Key Coefficients**:
+   - Latitude (lat): Positive relation. An increase in latitude is associated with an increase in house price by approximately $679,800.
+   - Longitude (long): Negative relation. An increase in longitude reduces the house price by approximately $216,300.
+   - Sqft of Living Space (sqft_living): Positive relation. An increase in living space (in sqft) raises the house price by approximately $263.64.
+   
+   - View Quality: Houses with better views (especially `view_4.0` category) have significantly higher prices.
+   - Renovated: Renovated houses are priced about $102,800 higher than non-renovated houses on average.
+
+3. **Considerations**:
+   - **Sqft of Lot Space (sqft_lot)**: This predictor might not be significant due to a p-value greater than 0.05.
+   - **Residuals**: They might not be normally distributed.
+   - **Multicollinearity**: Some predictors might be correlated, as indicated by the large condition number.
 
 ![Model 4 Results](./Images/output_34_0.png)
 
@@ -113,11 +169,4 @@ To address the research questions, multiple regression models are employed, each
 5. **Training & Workshops:** Organize regular training sessions for the sales and management teams. Ensure they understand and trust the data-driven recommendations.
 
 By adopting these conclusions, recommendations, and action points, Haven-Kings Property Management can achieve a competitive edge in the King County real estate market, leading to increased profitability and growth.
-
-## Tech Stack
-- Python
-- Jupyter Notebook
-- Pandas, Numpy
-- Scikit-learn
-- Matplotlib, Seaborn
 

@@ -100,7 +100,31 @@ The OLS regression provides insights into the relationship between `sqft_living`
 
 - **Coefficient for sqft_living (1.54e-05):** This coefficient suggests that for every unit increase in square footage (`sqft_living`), the dependent variable increases by \(1.54 \times 10^{-5}\). The predictor's p-value is almost zero, confirming its statistical significance in the model.
 
+- **Lambda value for Box-Cox transformation: -0.24602697608824728**
+
+
 ![Model 2 Results](./Images/output_28_0.png)
+
+
+![Model 2 Results](./Images/output_28_1.png)
+
+
+![Model 2 Results](./Images/output_28_2.png)
+
+
+![Model 2 Results](./Images/output_28_3.png)
+
+
+![Model 2 Results](./Images/output_28_4.png)
+
+
+![Model 2 Results](./Images/output_28_5.png)
+
+
+![Model 2 Results](./Images/output_28_6.png)
+
+
+
 
 #### Model 3: Property Attributes and Their Influence on Market Value
 - **Objective:** Assess how property attributes, including geographical aspects, affect market value.
@@ -147,6 +171,11 @@ OLS Regression Analysis Summary:
    - **Multicollinearity**: Some predictors might be correlated, as indicated by the large condition number.
 
 ![Model 4 Results](./Images/output_34_0.png)
+
+![Model 4 Results](./Images/output_34_1.png)
+
+![Model 4 Results](./Images/output_34_2.png)
+
 
 ## Conclusions:
 1. **Data-Driven Decision Making:** Given the depth and breadth of data available from King County House Sales, data-driven decision-making is not only feasible but also crucial for optimizing real estate strategies.
